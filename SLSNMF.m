@@ -13,7 +13,7 @@ function [X_new, U, V, W, F, objsum, score_f, idx, iter] = SLSNMF(X, kk, Ds, Ws,
 %   l       - The number of classes.
 %
 % Output:
-%   X_new   - The final low-dimensional representation (n*£¨i-1£©).
+%   X_new   - The final low-dimensional representation (n*Â£Â¨i-1Â£Â©).
 %--------------------------------------------------------------------------
 %    Examples:
 %       load('COIL20.mat');
@@ -39,7 +39,7 @@ for iter = 1:NIter
 	% ===================== update U ========================
     U = U.*(X*V*H')./(U*H*V'*V*H');
 	% ===================== update V & W & F========================
-    V = V.*(X'*U*H + 2*alpha*V*F'*W' + lambda*Ws*V)./(V*H'*U'*U*H + alpha*V + alpha*V*W*F*F'*W' + lambda*Ds*V);
+    V = V.*(X'*U*H + alpha*V*F'*W' + alpha*V*W*F + lambda*Ws*V)./(V*H'*U'*U*H + alpha*V + alpha*V*W*F*F'*W' + lambda*Ds*V);
     W = W.*(alpha*V'*V*F' + U'*X*V*W + V'*X'*U*W)./(alpha*V'*V*W*F*F' + (beta./(1 + W))+2*U'*U*W*W'*V'*V*W + V'*V*W*W'*U'*U*W);
     F = F.*(W'*V'*V)./(W'*V'*V*W*F);
     % ==============================================================
